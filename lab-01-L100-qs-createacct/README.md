@@ -1,4 +1,4 @@
-# QuickSight Basic
+# Chapter 01 - QuickSight Basic
 Objective: To create basic QuickSight visualisation using csv files
 
 ## Topic 1: AWS Console - Navigating to QuickSight
@@ -15,3 +15,10 @@ Objective: To create basic QuickSight visualisation using csv files
 1. Notification email address: *yourEmailAddress@company.com*
 1. Check on the checkbox for **Amazon S3**, a pop up will appear. Check on **Select all** and click **Finish**
 1. Click **Finish** at the bottom right
+
+### Topic 2.2: Completion of Account Creation
+1. It takes less than 1 minute for account to create completely.
+1. Click "Go to QuickSight Account"
+1. Read through the introduction and click **Next**. Repeat until **Finish**
+
+Congratulations! You successfully create your quicksight account.
