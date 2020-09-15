@@ -1,0 +1,15 @@
+CREATE TABLE people_overview(
+  tenure INT,
+  joindate varchar(256),
+  dob varchar(256),
+  education varchar(256),
+  employeeId varchar(256),
+  employeeName varchar(256),
+  eventType varchar(256),
+  gender varchar(256),
+  isunique varchar(256),
+  jobFamily varchar(256),
+  jobLevel varchar(256),
+  monthlyCompensation decimal,
+  notes varchar(256),
+  region varchar(256));
