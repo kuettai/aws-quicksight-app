@@ -83,60 +83,69 @@ SELECT COUNT(*) from people_overview;
 quit;
 ```
 
-## Topic 2 - Download CSV file from S3 into EC2
-1. *Note: Presumed that you have setup IAM Roles and attach to EC2, else refers to Prerequisite*
-1. Run the following bash script: ``aws s3 cp s3://qs-demo001-<YOUR_NAME>-2020/quicksight-aws-people-overview.csv .``. Remember to replace the value \<YOUR_NAME\> to correct value
-1. *Note: If you encounter permission error, fix your IAM Roles Policy and make sure it is attach to EC2*
-1. *Note: If you encounter file/bucket not-exists error, make sure the bucket name and file name in the command in correct*
-1. To validate the file is there: ``wc -l quick*``, it should displays **1957 quicksight-aws-people-overview.csv**
+## Topic 2 - Attach Security Group to EC2 & QuickSight
+### Topic 2.1 creates security groups
+1. At AWS Console, under **Services**, go to **EC2**
+1. Find **Security Groups** located on the left hand side of the menu (might need to scroll down), click
+1. Click **Create security group** button
+1. Put in the following information:
+    1. Security group name: **QuickSightSG**
+    1. Description: **Security Group for QuickSight**
+    1. Scroll down, click **Create security group**
+    1. **Important** After that, COPY down the Security group ID. We need it in **Topic 2.3**
+1. Back to **Security Groups**, we need to create another Security Group
+1. Put in the following information:
+    1. Security group name: **EC2MySQLQuickSightSG**
+    1. Description: **Security Group for QuickSight to access MySQL on EC2**
+    1. Inbound rules -> Add rule:
+    1. *Type*=**MYSQL/Aurora**,
+    1. *Source*=QuickSightSG, then click on item appeared)
+    1. Scroll down, click **Create security group**
+1. Back to **Security Groups**, we need to edit the first Security Groups to add Inbound Rules that accept all TCP connection from **EC2MySQLQuickSightSG**
+1. Check **QuickSightSG**, click **Actions** -> **Edit inbound rules**
+1. Inbound rules -> Add rule
+    1. *Type*=**All TCP**,
+    1. *Source*=EC2MySQL, then click on item appeared)
+    1. Scroll down, click **Create security group**
 
 
+### Topic 2.2 Attach Security Group on EC2
+1. At AWS Console, under **Services**, go to **EC2**
+1. Find **Instances** located on the left hand side of the menu, click it
+1. Identify the EC2 instance that has MySQL installed, click on the **checkbox** beside it
+1. Under **Actions** -> **Networking** -> **Change Security Groups**
+1. Check on **EC2MySQLQuickSightSG**, then click **Assign Security Groups** button
 
-
-
-## Topic 2 - Create External Table in Athena
-### Topic 2.1 - Configure Athena (First Timer only)
-1. At AWS Console, under **Services**, go to **Athena**
-1. Click **Get Started** button
-1. Click **Settings** on the top right corner
-1. Under **Query result location**, use the S3 Bucket Name created at Topic 1
-1. Click **Save** button at bottom right corner
-
-### Topic 2.2 - Create External Table
-1. In the textarea under **New query 1**, copy the following SQL ```create DATABASE qsdemo001;``` and click **Run query** button
-1. Open up *athena-s3-table.sql* downloaded, change the ```<BUCKET_NAME>>``` to the **bucket name** where csv file is located
-1. Copy the text, replace the entire text in **New query 1**, and click **Run query** button
-1. Replace the SQL with the following ```select * from people_overview_csv;``` and click **Run query** button. You should be able to see list of records at **Results** section. It is located below the **Run query** button
-
-### Topic 2.3 - Create Views
-1. *Note: The next step below is to create a view with proper datetime datatype; The datatype for both `date of birth` & `date` is in VARCHAR*
-1. Copy the text in *athena-s3-view01.sql*, replace existing SQL in **New query 1**, and click **Run query** button
-1. *Note: The next step below is to create another view to drop off unncessary fields, and populate 3 new fields, namely: `Age`, `genderShortcode` & `realTenure`*
-1. Copy the text in *athena-s3-view02.sql*, replace existing SQL in **New query 1**, and click **Run query** button
-1. To validate result, run the following query ``select * from vw_people;``, and click **Run query** button
-
-## Topic 3 - QuickSight to load data from Athena
-### Topic 3.1 - Grant permission for QuickSight to access S3 bucket
+### Topic 2.3 Attach Security Group on QuickSight
 1. Back to QuickSight homepage
-1. On the top right, click on your <userid>, then click **Manage QuickSight**
-1. On the left, click on **Security & permissions**, then click **Add or remove** button
-1. Under **Amazon Athena**, click on **Details**, click **Select S3 buckets** button
-1. Check on the checkbox's of the S3 Bucket created in **Topic 1**, then click **Finish** button at the bottom right of the screen
-1. Click **Update** button at the bottom right of the screen
+1. *Note: Make sure your QuickSight is in the correct region as  your EC2*
+1. Navigate to Top Right of QuickSight and click the *person* icon, it will shows your current region. Change the region if it is not where your EC2 located.
+1. Click on same *person* icon, then click **Manage QuickSight**
+1. Go to **Manage VPC connections**, click **Add VPC connection**
+1. Put in the following information:
+    1. VPC connection name: **EC2MySQL**
+    1. VPC ID: **Pick the only one appear**
+    1. Subnet ID: **Pick any**
+    1. Security group ID: **Copy from Topic 2.1, and paste it here**
+    1. Click **Create** button
 
-### Topic 3.2 - Changing your QuickSight Region
-1. *Note: QuickSight and Athena Database must be in the same region for QuickSight to detect it*
-1. Click on the *Person* icon at top right corner, change QuickSight region (e.g. us-east-1) to your Athena's region (e.g. ap-southeast-1)
-1. The introduction screen will appear. You may proceed with the introduction again or you may close the pop up windows
-
-### Topic 3.3 - Add new dataset, source from Athena
+## Topic 3 - Create Dataset using MySQL connection
 1. Back to QuickSight homepage
 1. Click on **Datasets**
-1. Click on **New dataset**
-1. Click on **Athena**
-1. For **Data source name**, input *PeopleOverviewAthena*, Click **Validate connection** button. After validation completed, click on **Create data source** button
-1. Database, choose **qsdemo001**
-1. Tables, choose **vw_people**
+1. Click on **New dataset** at top right of the screen
+1. Click **MySQL**
+1. Put in the following information:
+    1. Data source name: **PeopleOverviewMySQL**
+    1. Connection type: **EC2MySQL**
+    1. Database server: **PRIVATE_IP_OF_EC2_INSTANCE**
+    1. Port: **3306**
+    1. Database name: **quicksight**
+    1. Username: **qsuser**
+    1. Password: **abc123**
+    1. Enable SSL: **Uncheck**
+1. Click **Validate connection**
+1. Click **Create data source**
+1. Select **people_overview**
 1. Click **Edit/Preview data**
 1. Perform reviews on table columns, and sample recordsets manually
 1. Remember to **Save** the dataset by clicking on the **Save** button on top, else it will not reflect in your QuickSight
