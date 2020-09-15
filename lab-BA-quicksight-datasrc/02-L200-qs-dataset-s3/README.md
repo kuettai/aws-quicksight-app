@@ -1,4 +1,4 @@
-# Chapter 01 - Import dataset through files storing in S3
+# Chapter 02 - Import dataset through files storing in S3
 Learning Outcome:
 - Upload file to AWS S3 bucket
 - Create new dataset using file storing in S3 bucket

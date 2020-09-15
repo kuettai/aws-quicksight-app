@@ -1,4 +1,4 @@
-# Chapter 01 - Import dataset through files storing in S3
+# Chapter 03 - Import dataset through Athena
 Learning Outcome:
 - Create EXTERNAL TABLE in Athena referencing csv file in S3 bucket
 - Create new dataset using Athena in QuickSight
