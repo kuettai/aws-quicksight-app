@@ -14,9 +14,9 @@ Not Including:
 
 ## Topic 1 - Install MySQL/MariaDB Server on EC2
 1. *Expecting you to login to EC2 already, if not, refers: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html
-1. In terminal as **ec2_user**, run the following commands: ``sudo su -`` to switch to root user
+1. In terminal as **ec2_user**, run the following commands: ```sudo su -``` to switch to root user
 1. After that, execute the following scripts to install & setup mariadb:
-``bash
+```bash
 yum update -y
 yum install mariadb-server -y
 systemctl start mariadb
@@ -25,26 +25,26 @@ mysql_secure_installation
 ## Upon prompting option
 - set password for root users
 - 'Y' for remaining options
-``
+```
 
 1. Restart MariaDB to take effects
-``bash
+```bash
 systemctl stop mariadb
 systemctl enable mariadb
-``
+```
 
 1. Login to MySQL using ROOT, to create user
-``bash
+```bash
 mysql -u root -p
 
 ## After successfully login as root
 CREATE USER 'qsuser'@'%' IDENTIFIED BY 'abc123';
 GRANT ALL PRIVILEGES ON *.* TO 'qsuser'@'%';
 quit;
-``
+```
 
 1. Login as new user using password 'abc123', then create database
-``sql
+```sql
 mysql -u qsuser -p
 
 ## After successfully login as qsuser
@@ -81,7 +81,7 @@ SELECT COUNT(*) from people_overview;
 
 ## Exit MySQL terminal
 quit;
-``
+```
 
 ## Topic 2 - Download CSV file from S3 into EC2
 1. *Note: Presumed that you have setup IAM Roles and attach to EC2, else refers to Prerequisite*
@@ -103,10 +103,10 @@ quit;
 1. Click **Save** button at bottom right corner
 
 ### Topic 2.2 - Create External Table
-1. In the textarea under **New query 1**, copy the following SQL ``create DATABASE qsdemo001;`` and click **Run query** button
-1. Open up *athena-s3-table.sql* downloaded, change the ``<BUCKET_NAME>>`` to the **bucket name** where csv file is located
+1. In the textarea under **New query 1**, copy the following SQL ```create DATABASE qsdemo001;``` and click **Run query** button
+1. Open up *athena-s3-table.sql* downloaded, change the ```<BUCKET_NAME>>``` to the **bucket name** where csv file is located
 1. Copy the text, replace the entire text in **New query 1**, and click **Run query** button
-1. Replace the SQL with the following ``select * from people_overview_csv;`` and click **Run query** button. You should be able to see list of records at **Results** section. It is located below the **Run query** button
+1. Replace the SQL with the following ```select * from people_overview_csv;``` and click **Run query** button. You should be able to see list of records at **Results** section. It is located below the **Run query** button
 
 ### Topic 2.3 - Create Views
 1. *Note: The next step below is to create a view with proper datetime datatype; The datatype for both `date of birth` & `date` is in VARCHAR*
