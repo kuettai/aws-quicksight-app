@@ -38,7 +38,7 @@ Learning Outcome:
 1. Change **<REGION>** to your region, e.g **ap-southeast-1**
 1. Change **<BUCKET>** to the bucket name created in **Topic 1.1**, e.g **qs-demo001-kuettai-2020**
 1. Change **<FILENAME>** to the data file name, e.g **quicksight-aws-people-overview.csv**
-1. The **URIs** should looks like this: ``https://s3-ap-southeast-1.amazonaws.com/qs-demo001-kuettailearn-2020/quicksight-aws-people-overview.csv``
+1. The **URIs** should looks like this: ```https://s3-ap-southeast-1.amazonaws.com/qs-demo001-kuettailearn-2020/quicksight-aws-people-overview.csv```
 
 ### Topic 2.3 - Add new dataset, source from S3
 ?? download manifest.json ??

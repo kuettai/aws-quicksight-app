@@ -27,17 +27,17 @@ Learning Outcome:
 1. Click **Save** button at bottom right corner
 
 ### Topic 2.2 - Create External Table
-1. In the textarea under **New query 1**, copy the following SQL ``create DATABASE qsdemo001;`` and click **Run query** button
-1. Open up *athena-s3-table.sql* downloaded, change the ``<BUCKET_NAME>>`` to the **bucket name** where csv file is located
+1. In the textarea under **New query 1**, copy the following SQL ```create DATABASE qsdemo001;``` and click **Run query** button
+1. Open up *athena-s3-table.sql* downloaded, change the ```<BUCKET_NAME>>``` to the **bucket name** where csv file is located
 1. Copy the text, replace the entire text in **New query 1**, and click **Run query** button
-1. Replace the SQL with the following ``select * from people_overview_csv;`` and click **Run query** button. You should be able to see list of records at **Results** section. It is located below the **Run query** button
+1. Replace the SQL with the following ```select * from people_overview_csv;``` and click **Run query** button. You should be able to see list of records at **Results** section. It is located below the **Run query** button
 
 ### Topic 2.3 - Create Views
 1. *Note: The next step below is to create a view with proper datetime datatype; The datatype for both `date of birth` & `date` is in VARCHAR*
 1. Copy the text in *athena-s3-view01.sql*, replace existing SQL in **New query 1**, and click **Run query** button
 1. *Note: The next step below is to create another view to drop off unncessary fields, and populate 3 new fields, namely: `Age`, `genderShortcode` & `realTenure`*
 1. Copy the text in *athena-s3-view02.sql*, replace existing SQL in **New query 1**, and click **Run query** button
-1. To validate result, run the following query ``select * from vw_people;``, and click **Run query** button
+1. To validate result, run the following query ```select * from vw_people;```, and click **Run query** button
 
 ## Topic 3 - QuickSight to load data from Athena
 ### Topic 3.1 - Grant permission for QuickSight to access S3 bucket
