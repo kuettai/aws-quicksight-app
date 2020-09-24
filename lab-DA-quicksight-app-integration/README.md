@@ -7,6 +7,12 @@ Topic 1 - Whitelist domain
 [Preparation of EC2]
 ```bash
 yum update -y
+## Install LAMP stack if haven't done
+amazon-linux-extras install -y lamp-mariadb10.2-php7.2 php7.2
+yum install -y httpd mariadb-server
+
+
+## Enable HTTPS
 systemctl start httpd && sudo systemctl enable httpd
 yum install -y mod_ssl
 
