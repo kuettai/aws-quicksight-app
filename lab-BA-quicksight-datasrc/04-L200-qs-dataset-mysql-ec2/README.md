@@ -15,6 +15,13 @@ Not Including:
 ## Topic 1 - Install MySQL/MariaDB Server on EC2
 1. *Expecting you to login to EC2 already, if not, refers: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html
 1. In terminal as **ec2_user**, run the following commands: ```sudo su -``` to switch to root user
+### Topic 1.1 Download csv file from S3 to EC2
+```bash
+cd ~
+aws s3 cp s3://<BUCKET_NAME>//quicksight-aws-people-overview.csv .
+```
+
+### Topic 1.2
 1. After that, execute the following scripts to install & setup mariadb:
 ```bash
 yum update -y

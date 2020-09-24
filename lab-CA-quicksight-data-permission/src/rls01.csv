@@ -1,4 +1,4 @@
 UserName,Region
-kuettai,"APAC,EMEA,US"
-weisin,"APAC"
-cedric,"EMEA,US"
+FULLUSER,"APAC,EMEA,US"
+APACUSER,"APAC"
+NONAPACUSER,"EMEA,US"
