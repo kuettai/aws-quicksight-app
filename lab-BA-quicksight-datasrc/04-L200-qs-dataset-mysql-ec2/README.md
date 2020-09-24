@@ -99,13 +99,13 @@ quit;
     1. Description: **Security Group for QuickSight to access MySQL on EC2**
     1. Inbound rules -> Add rule:
     1. *Type*=**MYSQL/Aurora**,
-    1. *Source*=QuickSightSG, then click on item appeared)
+    1. *Source*=QuickSightSG, then click on item appeared
     1. Scroll down, click **Create security group**
 1. Back to **Security Groups**, we need to edit the first Security Groups to add Inbound Rules that accept all TCP connection from **EC2MySQLQuickSightSG**
 1. Check **QuickSightSG**, click **Actions** -> **Edit inbound rules**
 1. Inbound rules -> Add rule
     1. *Type*=**All TCP**,
-    1. *Source*=EC2MySQL, then click on item appeared)
+    1. *Source*=EC2MySQL, then click on item appeared
     1. Scroll down, click **Create security group**
 
 
