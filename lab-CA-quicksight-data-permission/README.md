@@ -19,10 +19,9 @@ Session covers:
 - Publish Dashboard
 - Upload rls01.csv as RLS dataset
 - Configure PeopleOverviewDataset with RLS using rls01.csv, use "ALLOW"
-- Login as cedric to view Dashboard (should see only EMEA / US data, shows also filter)
+- Login as NONAPACUSER to view Dashboard (should see only EMEA / US data, shows also filter)
 - Configure PeopleOverviewDataset, to use "DENY" this time
-- Login as cedric to view Dashboard (should see only APAC, shows also filter)
-- Try different rls02.csv to have more granular combo
+- Login as NONAPACUSER to view Dashboard (should see only APAC, shows also filter)
 
 ====
 [Chapter 02]

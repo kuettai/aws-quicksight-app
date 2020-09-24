@@ -19,6 +19,11 @@ systemctl restart httpd
 ```
 
 [NEW SCRIPT]
+# Topic XX: Install AWS PHP SDK
+1. Download composer: https://getcomposer.org/download/
+1. ```yum install -y php-simplexml```
+1. https://docs.aws.amazon.com/sdk-for-php/v3/developer-guide/getting-started_installation.html
+
 ```php
 <?php ##Filename: qs.php
 require __DIR__ . '/vendor/autoload.php';
@@ -53,7 +58,7 @@ function generateQuickSightUrl(){
     'ResetDisabled' => true,
     'SessionLifetimeInMinutes' => 15,
     'UndoRedoDisabled' => true,
-    'UserArn' => 'arn:aws:quicksight:us-east-1:'.$awsAccountId.':user/'.$namespace.'/' . $defaultQuickSightId,
+    'UserArn' => 'arn:aws:quicksight:us-east-1:'.$awsAccountId.':user/'.$namespace.'/' . $quickSightUserId,
     #'UserArn' => 'arn:aws:quicksight:us-east-1:956288449190:user/default/QuickSightDemoRole/yongkue+reader@amazon.com',
   ]);
 
@@ -63,9 +68,10 @@ function generateQuickSightUrl(){
 
 ```html
 <script src="https://unpkg.com/amazon-quicksight-embedding-sdk@1.0.3/dist/quicksight-embedding-js-sdk.min.js"></script>
-Homepage<br>
+Homepage: Current User: <b><?php echo $_GET['userid']?? 'FULLUSER'; ?></b> <br>
 Change User (test):
-<select>
+<select onchange="window.location.href = '?userid='+this.value">
+  <option selected value='-'> - </option>
   <option value='APACUSER'>APACUSER</option>
   <option value='NONAPACUSER'>NONAPACUSER</option>
   <option value='FULLUSER'>FULLUSER</option>
@@ -108,7 +114,6 @@ Change User (test):
 
 
 
-[OLD SCRIPT]
 Topic 2 - Create IAM Role to generate QuickSight roles
 1. Create IAM Policy
 ```
@@ -128,44 +133,4 @@ Topic 2 - Create IAM Role to generate QuickSight roles
         }
     ]
 }
-```
-
-1. Create IAM Roles
-1. Edit EC2 IAM Roles / Identity to able to assume this role
-```
-{
-    "Effect": "Allow",
-    "Action": "sts:AssumeRole",
-    "Resource": "arn:aws:iam::956288449190:role/QuickSightDemoRole"
-}
-```
-
-
-1. Login to EC2 with AdminIAM Roles
-```
-aws sts assume-role \
-     --role-arn "arn:aws:iam::956288449190:role/QuickSightDemoRole" \
-     --role-session-name yongkue+reader@amazon.com
-```
-
-```
-aws quicksight register-user \
-  --aws-account-id 956288449190 \
-  --identity-type IAM \
-  --iam-arn "arn:aws:iam::956288449190:role/QuickSightDemoRole" \
-  --user-role READER \
-  --namespace default \
-  --session-name "yongkue+reader@amazon.com" \
-  --email "yongkue+reader@amazon.com" \
-  --region us-east-1
-```
-
-
-```
-aws quicksight get-dashboard-embed-url \
-     --aws-account-id 956288449190 \
-     --dashboard-id c91ac6a0-787e-4e1e-b90d-81dae8dea45a \
-     --identity-type QUICKSIGHT \
-     --region us-east-1 \
-     --user-arn arn:aws:quicksight:us-east-1:956288449190:user/default/QuickSightDemoRole/yongkue+reader@amazon.com
 ```
