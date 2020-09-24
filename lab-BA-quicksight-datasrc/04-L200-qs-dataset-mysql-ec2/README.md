@@ -25,6 +25,7 @@ aws s3 cp s3://<BUCKET_NAME>//quicksight-aws-people-overview.csv .
 1. After that, execute the following scripts to install & setup mariadb:
 ```bash
 yum update -y
+amazon-linux-extras install -y lamp-mariadb10.2-php7.2 php7.2
 yum install mariadb-server -y
 systemctl start mariadb
 mysql_secure_installation
